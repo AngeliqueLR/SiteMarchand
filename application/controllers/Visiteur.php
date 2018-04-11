@@ -15,7 +15,9 @@
             $DonneesEnvoyees['lesProduits'] = $this->ModeleCatalogue->retournerProduit();
             $DonneesEnvoyees['TitreDePage'] = 'De fil en aiguille trouvez votre petit bonheur par ici';
 
+            $this->load->view('templates/Entete');            
             $this->load->view('Visiteur/Catalogue', $DonneesEnvoyees);
+            $this->load->view('templates/PiedDePage');            
         }
 
         public function voirUnProduit($pNoProduit = NULL)
