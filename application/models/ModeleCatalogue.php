@@ -6,13 +6,20 @@
           $this->load->database();
       }
 
-      public function retournerJoueurs($pRefJoueur = FALSE)
+      public function retournerProduit($pNoProduit = FALSE)
       {
-          if($pRefJoueur === FALSE)
-          {
-              $requete = $this->db->get('joueur');
-              return $requete->row_array();
-          }
+        if($pNoProduit === FALSE)
+        {
+            $this->db->select('LIBELLE, PRIXHT, TAUXTVA, QUANTITEENSTOCK, NOMIMAGE');
+            $requete = $this->db->get('produit');
+
+            return $requete->row_array();
+        }
+
+        $this->db->select('LIBELLE, PRIXHT, TAUXTVA, QUANTITEENSTOCK, NOMIMAGE');
+        $requete = $this->db->get_where('produit', array('NOPRODUIT' => $pNoProduit));
+
+        return $requete->row_array();
       }
     }
 ?>
