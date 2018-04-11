@@ -10,13 +10,13 @@
       {
         if($pNoProduit === FALSE)
         {
-            $this->db->select('LIBELLE, PRIXHT, TAUXTVA, QUANTITEENSTOCK, NOMIMAGE');
+            $this->db->select('LIBELLE, PRIXHT, TAUXTVA, QUANTITEENSTOCK, NOMIMAGE, NOMIMAGEBIS');
             $requete = $this->db->get('produit');
 
             return $requete->result_array();
         }
 
-        $this->db->select('LIBELLE, PRIXHT, TAUXTVA, QUANTITEENSTOCK, NOMIMAGE, DETAIL');
+        $this->db->select('LIBELLE, PRIXHT, TAUXTVA, QUANTITEENSTOCK, NOMIMAGE, NOMIMAGEBIS, DETAIL');
         $requete = $this->db->get_where('produit', array('NOPRODUIT' => $pNoProduit));
 
         return $requete->row_array();
