@@ -32,7 +32,9 @@
             $DonneesEnvoyees['TitreDePage'] = $DonneesEnvoyees['unProduit']['LIBELLE'];
             //récupère le nom du produit et l'ajoute comme titre
 
-            $this->load->view('Visiteur/VoirProduit', $DonneesEnvoyees);
+            $this->load->view('templates/Entete');            
+            $this->load->view('Visiteur/VoirUnProduit', $DonneesEnvoyees);
+            $this->load->view('templates/PiedDePage');            
         }
 
     }

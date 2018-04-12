@@ -10,7 +10,7 @@
       {
         if($pNoProduit === FALSE)
         {
-            $this->db->select('LIBELLE, PRIXHT, TAUXTVA, QUANTITEENSTOCK, NOMIMAGE, NOMIMAGEBIS');
+            $this->db->select('NOPRODUIT, LIBELLE, PRIXHT, TAUXTVA, QUANTITEENSTOCK, NOMIMAGE, NOMIMAGEBIS');
             $requete = $this->db->get('produit');
 
             return $requete->result_array();

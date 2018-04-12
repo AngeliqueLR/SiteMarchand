@@ -1,7 +1,7 @@
 <?php
-    echo '<h2>'.$unProduit.'</h2>';
-    echo '<p>'.img($unProduit['NOMIMAGE']).'</p>';
+    echo '<h2>'.$unProduit['LIBELLE'].'</h2>';
+    echo '<p>'.img($unProduit['NOMIMAGE']).' '.img($unProduit['NOMIMAGEBIS']).'</p>';
     $prix = $unProduit['PRIXHT'] + ($unProduit['PRIXHT'] * $unProduit['TAUXTVA'] / 100);
-    echo $prix;
-    echo $unProduit['QUANTITEENSTOCK'].'</br>'.$unProduit['DETAIL'];
+    echo $prix.' € </br>';
+    echo 'Quantité en stock : '.$unProduit['QUANTITEENSTOCK'].'</br> Informations sur le produit : '.$unProduit['DETAIL'];
 ?>
