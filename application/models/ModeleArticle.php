@@ -26,5 +26,26 @@
         {
             return $this->db->insert('PRODUIT', $pDonneesAInserer);
         }
+
+        public function retournerArticlesLimite($nombreDeLignesARetourner, $noPremiereLigneARetourner)
+        {
+            $this->db->limit($nombreDeLignesARetourner, $noPremiereLigneARetourner);
+            $requete = $this->db->get("PRODUIT");
+
+            if ($requete->num_rows() > 0) 
+            { 
+                foreach ($requete->result() as $ligne) 
+                {
+                    $jeuDEnregsitrements[] = $ligne;
+                }
+                return $jeuDEnregsitrements;
+            }
+            return false;
+        }
+
+        public function nombreDArticles() 
+        {
+            return $this->db->count_all("PRODUIT");
+        }
     }
 ?>
