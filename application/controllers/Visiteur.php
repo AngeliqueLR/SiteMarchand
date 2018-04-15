@@ -7,12 +7,12 @@
             $this->load->helper('url');
             $this->load->helper('assets');
             $this->load->library("pagination");
-            $this->load->model('ModeleCatalogue');          
+            $this->load->model('ModeleArticle');          
         }
 
         public function AfficherCatalogue()
         {
-            $DonneesEnvoyees['lesProduits'] = $this->ModeleCatalogue->retournerProduit();
+            $DonneesEnvoyees['lesProduits'] = $this->ModeleArticle->retournerProduit();
             $DonneesEnvoyees['TitreDePage'] = 'De fil en aiguille trouvez votre petit bonheur par ici';
 
             $this->load->view('templates/Entete');            
@@ -22,7 +22,7 @@
 
         public function voirUnProduit($pNoProduit = NULL)
         {
-            $DonneesEnvoyees['unProduit'] = $this->ModeleCatalogue->retournerProduit($pNoProduit);
+            $DonneesEnvoyees['unProduit'] = $this->ModeleArticle->retournerProduit($pNoProduit);
 
             if (empty($DonneesEnvoyees['unProduit']))
             {//pas d'article correspondant à ce numéro
