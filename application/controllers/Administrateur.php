@@ -7,7 +7,7 @@
             $this->load->model('ModeleArticle');
 
             $this->load->library('session');
-            if ($this->session->statut==0)
+            if ($this->session->statut=='Client')
             {
                 $this->load->helper('url');
                 redirect('/Visiteur/seConnecter');
@@ -22,19 +22,15 @@
             $DonneesEnvoyees['TitreDeLaPage'] = 'Ajouter un produit au catalogue';
             
             //regles de validations
-            $this->form_validation->set_rules('txtNomProduit', 'Nom du produit', 'required');
-            $this->form_validation->set_rules('txtPrixProduit', 'Prix HT du produit', 'required');
-            $this->form_validation->set_rules('txtTVAProduit', 'Taux de TVA du produit', 'required');
-            $this->form_validation->set_rules('txtPhotoProduit', 'Première photo du produit', 'required');
-            $this->form_validation->set_rules('txtPhotoBisProduit', 'Deuxième photo du produit', 'required');
-            $this->form_validation->set_rules('tbxQuantiteProduit', 'Quantité en stock', 'required');
-            $this->form_validation->set_rules('tbxDetailsProduit', 'Détails', 'required');
-            $this->form_validation->set_rules('tbxMarqueProduit', 'Marque du produit', 'required');
-            $this->form_validation->set_rules('tbxCategorieProduit', 'Catégorie du produit', 'required');
-
-            $numeroCategorie = $this->ModeleArticle->GetNumeroCategorie($this->input->post('txtCategorieProduit'));
-            $numeroMarque = $this->ModeleArticle->GetNumeroMarque($this->input->post('txtMarqueProduit'));
-            $dateAjout = date("YY-mm-dd");
+            $this->form_validation->set_rules('txtNomProduit', 'required');
+            $this->form_validation->set_rules('txtPrixProduit', 'required');
+            $this->form_validation->set_rules('txtTVAProduit', 'required');
+            $this->form_validation->set_rules('txtPhotoProduit', 'required');
+            $this->form_validation->set_rules('txtPhotoBisProduit', 'required');
+            $this->form_validation->set_rules('tbxQuantiteProduit', 'required');
+            $this->form_validation->set_rules('tbxDetailsProduit', 'required');
+            $this->form_validation->set_rules('tbxMarqueProduit', 'required');
+            $this->form_validation->set_rules('tbxCategorieProduit', 'required');
 
             if ($this->form_validation->run() === FALSE)
             {
@@ -45,6 +41,10 @@
             } 
             else 
             {
+                $numeroCategorie = $this->ModeleArticle->GetNumeroCategorie($this->input->post('txtCategorieProduit'));
+                $numeroMarque = $this->ModeleArticle->GetNumeroMarque($this->input->post('txtMarqueProduit'));
+                $dateAjout = date("YY-mm-dd");
+
                 $DonneesAInserer = array('NOCATEGORIE' => $numeroCategorie, 'NOMARQUE' => $numeroMarque, 
                 'LIBELLE' => $this->input->post('txtNomProduit'), 'DETAIL' => $this->input->post('txtDetailsProduit'),
                 'PRIXHT' => $this->input->post('txtPrixProduit'), 'TAUXTVA' => $this->input->post('txtTVAProduit'),

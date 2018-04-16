@@ -8,6 +8,7 @@
             $this->load->helper('assets');
             $this->load->library("pagination");
             $this->load->model('ModeleArticle');          
+            $this->load->model('ModeleUtilisateur');          
         }
 
         public function AfficherCatalogue()
@@ -57,7 +58,7 @@
             {  
                 $Utilisateur = array( 
                 'EMAIL' => $this->input->post('txtIdentifiant'),
-                'MOTDEPASSE' => $this->input->post('txtMotDePasse'),);
+                'MOTDEPASSE' => $this->input->post('txtMotDePasse'));
 
                 $UtilisateurRetourne = $this->ModeleUtilisateur->retournerUtilisateur($Utilisateur);
 
@@ -70,7 +71,7 @@
                     $DonneesInjectees['Identifiant'] = $Utilisateur['EMAIL'];
                     
                     $this->load->helper('url');
-                    redirect('/Utilisateur/Catalogue');
+                    redirect('/Visiteur/AfficherCatalogue');    
                 }
                 else
                 {
@@ -84,6 +85,8 @@
         public function seDeConnecter() 
         { 
             $this->session->sess_destroy();
+            $this->load->helper('url');
+            redirect('/Visiteur/AfficherCatalogue');
         }
 
         public function listerLesArticlesAvecPagination() 
@@ -105,7 +108,6 @@
          
             $DonneesInjectees['lesProduits'] = $this->ModeleArticle->retournerProduit();
             $DonneesInjectees['TitreDeLaPage'] = 'De fil en aiguille trouvez votre petit bonheur par ici';
-            //$DonneesInjectees["lesArticles"] = $this->ModeleArticle->retournerArticlesLimite($config["per_page"], $noPage);
             $DonneesInjectees["liensPagination"] = $this->pagination->create_links();
          
             $this->load->view('templates/Entete');
