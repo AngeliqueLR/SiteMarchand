@@ -31,3 +31,11 @@ if ( ! function_exists('img'))
     return '<img src="' . img_url($nom) . '" alt="' . $alt . '" />';
   }
 }
+
+if ( ! function_exists('img_onmouseover'))
+{
+  function img_onmouseover($nom, $nombis)
+  {
+    return '<img src = "'.img_url($nom).'" alt="image du produit" onmouseover = "javascript:this.src = \''.img_url($nombis).'\'" onmouseout = "javascript:this.src = \''.img_url($nom).'\'"/>';
+  }
+}

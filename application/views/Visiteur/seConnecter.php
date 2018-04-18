@@ -12,3 +12,5 @@
     echo form_submit('submit', 'Se connecter');
     echo form_close();
 ?>
+
+<a href="<?php echo site_url('Visiteur/Inscription') ?>">Pas encore inscrit, filez par ici!</a>&nbsp;&nbsp;
