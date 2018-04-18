@@ -22,6 +22,20 @@
             return $requete->row_array();
         }
 
+        public function retournerMarque()
+        {
+            $requete = $this->db->get('marque');
+
+            return $requete->result_array();
+        }
+
+        public function retournerCategorie()
+        {
+            $requete = $this->db->get('categorie');
+
+            return $requete->result_array();
+        }
+
         public function insererUnProduit($pDonneesAInserer)
         {
             return $this->db->insert('PRODUIT', $pDonneesAInserer);

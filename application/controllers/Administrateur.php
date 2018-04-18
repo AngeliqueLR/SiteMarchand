@@ -20,6 +20,8 @@
             $this->load->library('form_validation');
 
             $DonneesEnvoyees['TitreDeLaPage'] = 'Ajouter un produit au catalogue';
+            $DonneesEnvoyees['LesMarques'] = $this->ModeleArticle->retournerMarque();
+            $DonneesEnvoyees['LesCategories'] = $this->ModeleArticle->retournerCategorie();
             
             //regles de validations
             $this->form_validation->set_rules('txtNomProduit', 'required');
@@ -41,11 +43,9 @@
             } 
             else 
             {
-                $numeroCategorie = $this->ModeleArticle->GetNumeroCategorie($this->input->post('txtCategorieProduit'));
-                $numeroMarque = $this->ModeleArticle->GetNumeroMarque($this->input->post('txtMarqueProduit'));
                 $dateAjout = date("YY-mm-dd");
 
-                $DonneesAInserer = array('NOCATEGORIE' => $numeroCategorie, 'NOMARQUE' => $numeroMarque, 
+                $DonneesAInserer = array('NOCATEGORIE' => $this->input->post('txtCategorieProduit'), 'NOMARQUE' => $this->input->post('txtMarqueProduit'), 
                 'LIBELLE' => $this->input->post('txtNomProduit'), 'DETAIL' => $this->input->post('txtDetailsProduit'),
                 'PRIXHT' => $this->input->post('txtPrixProduit'), 'TAUXTVA' => $this->input->post('txtTVAProduit'),
                 'NOMIMAGE' => $this->input->post('txtPhotoProduit'), 'NOMIMAGEBIS' => $this->input->post('txtPhotoBisProduit'),

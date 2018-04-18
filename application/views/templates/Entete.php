@@ -18,6 +18,21 @@
                 width : 100%;
                 float: left;
             }
+            select[name=tbxCategorieProduit], select
+            {
+                width : 175px;
+                height : 21px;
+            }
+            select[name=tbxMarqueProduit], select
+            {
+                width : 175px;
+                height : 21px;
+            }
+            label
+            {
+                float: left;
+                margin-right: 5px;
+            }
         </style>
     </head>
 
