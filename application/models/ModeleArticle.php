@@ -46,13 +46,12 @@
             $this->db->limit($nombreDeLignesARetourner, $noPremiereLigneARetourner);
             $requete = $this->db->get("PRODUIT");
 
-            if ($requete->num_rows() > 0) 
-            { 
-                foreach ($requete->result() as $ligne) 
+            if($requete->num_rows() > 0)
+            {
+                foreach ($requete->result() as $ligne)
                 {
-                    $jeuDEnregsitrements[] = $ligne;
+                    return $requete->result_array(); 
                 }
-                return $jeuDEnregsitrements;
             }
             return false;
         }

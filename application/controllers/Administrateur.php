@@ -19,6 +19,8 @@
             $this->load->helper('form');
             $this->load->library('form_validation');
 
+            $dateAjout = date('Y-m-d');
+
             $DonneesEnvoyees['TitreDeLaPage'] = 'Ajouter un produit au catalogue';
             $DonneesEnvoyees['LesMarques'] = $this->ModeleArticle->retournerMarque();
             $DonneesEnvoyees['LesCategories'] = $this->ModeleArticle->retournerCategorie();
@@ -29,22 +31,13 @@
             $this->form_validation->set_rules('txtTVAProduit', 'required');
             $this->form_validation->set_rules('txtPhotoProduit', 'required');
             $this->form_validation->set_rules('txtPhotoBisProduit', 'required');
-            $this->form_validation->set_rules('tbxQuantiteProduit', 'required');
-            $this->form_validation->set_rules('tbxDetailsProduit', 'required');
-            $this->form_validation->set_rules('tbxMarqueProduit', 'required');
-            $this->form_validation->set_rules('tbxCategorieProduit', 'required');
+            $this->form_validation->set_rules('txtQuantiteProduit', 'required');
+            $this->form_validation->set_rules('txtDetailsProduit', 'required');
+            $this->form_validation->set_rules('txtMarqueProduit', 'required');
+            $this->form_validation->set_rules('txtCategorieProduit', 'required');
 
-            if ($this->form_validation->run() === FALSE)
+            if ($this->input->post('submit'))
             {
-                //formulaire non validé
-                $this->load->view('templates/Entete');
-                $this->load->view('Administrateur/ajouterUnProduit', $DonneesEnvoyees);
-                $this->load->view('templates/PiedDePage');                                
-            } 
-            else 
-            {
-                $dateAjout = date("YY-mm-dd");
-
                 $DonneesAInserer = array('NOCATEGORIE' => $this->input->post('txtCategorieProduit'), 'NOMARQUE' => $this->input->post('txtMarqueProduit'), 
                 'LIBELLE' => $this->input->post('txtNomProduit'), 'DETAIL' => $this->input->post('txtDetailsProduit'),
                 'PRIXHT' => $this->input->post('txtPrixProduit'), 'TAUXTVA' => $this->input->post('txtTVAProduit'),
@@ -52,7 +45,16 @@
                 'QUANTITEENSTOCK' => $this->input->post('txtQuantiteProduit'), 'DATEAJOUT' => $dateAjout,
                 'DISPONIBLE' => '1', 'Promotion' => '0');
 
-                $this->ModeleArticle->insererUnArticle($DonneesAInserer);
+                $this->ModeleArticle->insererUnProduit($DonneesAInserer);
+                $this->load->helper('url');
+                redirect('/Administrateur/ajouterUnProduit');
+            }
+            else 
+            {                
+                //formulaire non validé
+                $this->load->view('templates/Entete');
+                $this->load->view('Administrateur/ajouterUnProduit', $DonneesEnvoyees);
+                $this->load->view('templates/PiedDePage');        
             }
         }
     }

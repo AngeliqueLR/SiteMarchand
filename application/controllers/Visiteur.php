@@ -76,7 +76,58 @@
                 else
                 {
                     $this->load->view('templates/Entete');
-                    $this->load->view('visiteur/seConnecter', $DonneesInjectees);
+                    $this->load->view('Visiteur/seConnecter', $DonneesInjectees);
+                    $this->load->view('templates/PiedDePage');
+                }  
+            }
+        }
+
+        public function Inscription()
+        {
+            $this->load->helper('form');
+            $this->load->library('form_validation');
+
+            $DonneesInjectees['TitreDeLaPage'] = 'Inscrivez-vous!';
+
+            $this->form_validation->set_rules('txtNom', 'Nom', 'required');
+            $this->form_validation->set_rules('txtPrenom', 'Prénom', 'required');
+            $this->form_validation->set_rules('txtAdresse', 'Adresse', 'required');
+            $this->form_validation->set_rules('txtCodePostal', 'Code Postal', 'required');
+            $this->form_validation->set_rules('txtVille', 'Ville', 'required');
+            $this->form_validation->set_rules('txtEMail', 'Mail', 'required');
+            $this->form_validation->set_rules('txtMotDePasse', 'Mot de passe', 'required');
+            $this->form_validation->set_rules('txtConfMotDePasse', 'Confirmation de mot de passe', 'required');
+
+
+            if ($this->form_validation->run() === FALSE)
+            {
+                $this->load->view('templates/Entete');
+                $this->load->view('Visiteur/Inscription', $DonneesInjectees);
+                $this->load->view('templates/PiedDePage');
+            }
+            else
+            {  
+                $Utilisateur = array( 
+                'EMAIL' => $this->input->post('txtIdentifiant'),
+                'MOTDEPASSE' => $this->input->post('txtMotDePasse'));
+
+                $UtilisateurRetourne = $this->ModeleUtilisateur->retournerUtilisateur($Utilisateur);
+
+                if (!($UtilisateurRetourne == null))
+                { 
+                    $this->load->library('session');
+                    $this->session->identifiant = $UtilisateurRetourne->EMAIL;
+                    $this->session->statut = $UtilisateurRetourne->PROFIL;
+
+                    $DonneesInjectees['Identifiant'] = $Utilisateur['EMAIL'];
+                    
+                    $this->load->helper('url');
+                    redirect('/Visiteur/AfficherCatalogue');    
+                }
+                else
+                {
+                    $this->load->view('templates/Entete');
+                    $this->load->view('Visiteur/Inscription', $DonneesInjectees);
                     $this->load->view('templates/PiedDePage');
                 }  
             }
@@ -92,27 +143,26 @@
         public function listerLesArticlesAvecPagination() 
         {
             $config = array();
-            $config["base_url"] = site_url('visiteur/CatalogueAvecPagination');
+            $config["base_url"] = site_url('Visiteur/listerLesArticlesAvecPagination');
             $config["total_rows"] = $this->ModeleArticle->nombreDArticles();
             $config["per_page"] = 3;
-            $config["uri_segment"] = 3;       
-           
-         
-            $config['first_link'] = 'Premier';
-            $config['last_link'] = 'Dernier';
-            $config['next_link'] = 'Suivant';
-            $config['prev_link'] = 'Précédent';
-         
+            $config["uri_segment"] = 3;
+
+            $config["first_link"] = "Premier";
+            $config["last_link"] = "Dernier";
+            $config["next_link"] = "Suivant";
+            $config["prev_link"] = "Précédent";
+
             $this->pagination->initialize($config);
+
             $noPage = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-         
-            $DonneesInjectees['lesProduits'] = $this->ModeleArticle->retournerProduit();
-            $DonneesInjectees['TitreDeLaPage'] = 'De fil en aiguille trouvez votre petit bonheur par ici';
-            $DonneesInjectees["liensPagination"] = $this->pagination->create_links();
-         
+
+            $DonneesEnvoyees['TitreDeLaPage'] = 'De fil en aiguille trouvez votre petit bonheur par ici';
+            $DonneesEnvoyees['LesProduits'] = $this->ModeleArticle->retournerArticlesLimite($config["per_page"], $noPage);
+            $DonneesEnvoyees['liensPagination'] = $this->pagination->create_links();
             $this->load->view('templates/Entete');
-            $this->load->view("Visiteur/CatalogueAvecPagination", $DonneesInjectees);
-            $this->load->view('templates/PiedDePage');
+            $this->load->view('Visiteur/CatalogueAvecPagination', $DonneesEnvoyees);
+            $this->load->view('templates/PiedDePage');  
         }
     }
 ?>
