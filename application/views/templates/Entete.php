@@ -2,22 +2,6 @@
     <head>
         <title>De fil en aiguille</title>
         <style type = 'text/css'>
-            div[id=unProduit], select
-            {
-                width : 32%;
-                float: left;
-                margin-left : 15px;
-            }
-            div[id=publicite], select
-            {
-                width : 25%;
-                height : 95%;
-            }
-            div[id=TousLesProduits], select
-            {
-                width : 100%;
-                float: left;
-            }
             select[name=tbxCategorieProduit], select
             {
                 width : 175px;
@@ -69,33 +53,33 @@
     <body>
 
         <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>                        
-            </button>
-            <a class="navbar-brand" href="#">Logo</a>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                </button>
+                <a class="navbar-brand" href="#">Logo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Accueil</a></li>
+                    <?php if ($this->session->statut=='Administrateur') : ?>
+                        <li class="active"><a href="<?php echo site_url('Administrateur/ajouterUnProduit') ?>">Ajouter un produit</a></li>&nbsp;&nbsp;
+                    <?php endif; ?>    
+                    <li class="active"><a href="<?php echo site_url('Visiteur/AfficherCatalogue') ?>">Catalogue</a></li>&nbsp;&nbsp;
+                    <li class="active"><a href="<?php echo site_url('Visiteur/listerLesArticlesAvecPagination') ?>">Catalogue (par 3)</a></li>&nbsp;&nbsp;
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <?php if (!is_null($this->session->identifiant)) : ?>
+                        <li class="active"><a href="#"><span class="glyphicon glyphicon-user"></span><?php echo ' Bonjour : <B>'.$this->session->prenom.' '.$this->session->nom.'</B>&nbsp;&nbsp;';?></a></li>
+                        <li class="active"><a href="<?php echo site_url('Visiteur/seDeconnecter') ?>"><span class="glyphicon glyphicon-log-in"></span> Se déconnecter</a></li>&nbsp;&nbsp; 
+                    <?php else : ?>
+                        <li class="active"><a href="<?php echo site_url('Visiteur/seConnecter') ?>"><span class="glyphicon glyphicon-log-in"></span> Se Connecter</a></li>&nbsp;&nbsp;
+                    <?php endif; ?>
+                </ul>
+                </div>
             </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Accueil</a></li>
-                <?php if ($this->session->statut=='Administrateur') : ?>
-                    <li class="active"><a href="<?php echo site_url('Administrateur/ajouterUnProduit') ?>">Ajouter un produit</a></li>&nbsp;&nbsp;
-                <?php endif; ?>    
-                <li class="active"><a href="<?php echo site_url('Visiteur/AfficherCatalogue') ?>">Tout voir</a></li>&nbsp;&nbsp;
-                <li class="active"><a href="<?php echo site_url('Visiteur/listerLesArticlesAvecPagination') ?>">Catalogue (par 3)</a></li>&nbsp;&nbsp;
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <?php if (!is_null($this->session->identifiant)) : ?>
-                    <li class="active"><a href="#"><?php echo 'Utilisateur connecté : <B>'.$this->session->identifiant.'</B>&nbsp;&nbsp;';?></a></li>
-                    <li class="active"><a href="<?php echo site_url('Visiteur/seDeconnecter') ?>"><span class="glyphicon glyphicon-log-in"></span> Se déconnecter</a></li>&nbsp;&nbsp; 
-                <?php else : ?>
-                    <li class="active"><a href="<?php echo site_url('Visiteur/seConnecter') ?>"><span class="glyphicon glyphicon-log-in"></span> Se Connecter</a></li>&nbsp;&nbsp;
-                <?php endif; ?>
-            </ul>
-            </div>
-        </div>
         </nav> 
 

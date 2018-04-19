@@ -45,10 +45,10 @@
 
             $DonneesInjectees['TitreDeLaPage'] = 'Connectez-vous!';
 
-            $this->form_validation->set_rules('txtIdentifiant', 'Identifiant', 'required');
-            $this->form_validation->set_rules('txtMotDePasse', 'Mot de passe', 'required');
+            $this->form_validation->set_rules('txtIdentifiant', 'required');
+            $this->form_validation->set_rules('txtMotDePasse', 'required');
 
-            if ($this->form_validation->run() === FALSE)
+            if (!($this->input->post('submit')))
             {
                 $this->load->view('templates/Entete');
                 $this->load->view('Visiteur/seConnecter', $DonneesInjectees);
@@ -67,6 +67,8 @@
                     $this->load->library('session');
                     $this->session->identifiant = $UtilisateurRetourne->EMAIL;
                     $this->session->statut = $UtilisateurRetourne->PROFIL;
+                    $this->session->nom = $UtilisateurRetourne->NOM;
+                    $this->session->prenom = $UtilisateurRetourne->PRENOM;
 
                     $DonneesInjectees['Identifiant'] = $Utilisateur['EMAIL'];
                     
@@ -148,10 +150,10 @@
             $config["per_page"] = 3;
             $config["uri_segment"] = 3;
 
-            $config["first_link"] = "Premier";
-            $config["last_link"] = "Dernier";
-            $config["next_link"] = "Suivant";
-            $config["prev_link"] = "Précédent";
+            $config["first_link"] = "Premier ";
+            $config["last_link"] = " Dernier";
+            $config["next_link"] = "  >>";
+            $config["prev_link"] = "<<  ";
 
             $this->pagination->initialize($config);
 
