@@ -10,7 +10,7 @@
         echo form_label('Adresse ','txtAdresse'); // creation d'un label devant la zone de saisie
             echo form_input('txtAdresse', set_value('txtAdresse')).'<br/>';
         echo form_label('Code Postal ','txtCodePostal'); // creation d'un label devant la zone de saisie
-            echo form_input('txtCodePostal ', set_value('txtCodePostal')).'<br/>';
+            echo form_input('txtCodePostal', set_value('txtCodePostal')).'<br/>';
         echo form_label('Ville ','txtVille'); // creation d'un label devant la zone de saisie
             echo form_input('txtVille', set_value('txtVille')).'<br/>';
         echo form_label('Mail ','txtEMail'); // creation d'un label devant la zone de saisie
