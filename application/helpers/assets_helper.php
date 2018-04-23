@@ -39,3 +39,4 @@ if ( ! function_exists('img_onmouseover'))
     return '<img src = "'.img_url($nom).'" class="img-responsive" style="width:100%" alt="image du produit" onmouseover = "javascript:this.src = \''.img_url($nombis).'\'" onmouseout = "javascript:this.src = \''.img_url($nom).'\'"/>';
   }
 }
+

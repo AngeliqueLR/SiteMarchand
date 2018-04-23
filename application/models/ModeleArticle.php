@@ -10,7 +10,7 @@
         {
             if($pNoProduit === FALSE)
             {
-                $this->db->select('NOPRODUIT, LIBELLE, PRIXHT, TAUXTVA, QUANTITEENSTOCK, NOMIMAGE, NOMIMAGEBIS');
+                $this->db->select('NOPRODUIT, LIBELLE, PRIXHT, TAUXTVA, NOMIMAGE, NOMIMAGEBIS');
                 $requete = $this->db->get('produit');
 
                 return $requete->result_array();
@@ -20,20 +20,6 @@
             $requete = $this->db->get_where('produit', array('NOPRODUIT' => $pNoProduit));
 
             return $requete->row_array();
-        }
-
-        public function retournerMarque()
-        {
-            $requete = $this->db->get('marque');
-
-            return $requete->result_array();
-        }
-
-        public function retournerCategorie()
-        {
-            $requete = $this->db->get('categorie');
-
-            return $requete->result_array();
         }
 
         public function insererUnProduit($pDonneesAInserer)
@@ -59,6 +45,30 @@
         public function nombreDArticles() 
         {
             return $this->db->count_all("PRODUIT");
+        }
+
+        public function retournerArticlesParCategorie($pCategorieChoisie)
+        {
+            $this->db->select('NOPRODUIT, LIBELLE, PRIXHT, TAUXTVA, NOMIMAGE, NOMIMAGEBIS');
+            $requete = $this->db->get_where('produit', array('NOCATEGORIE' => $pCategorieChoisie));
+
+            return $requete->row_array();
+        }
+
+        public function retournerArticlesParMarque($pMarqueChoisie)
+        {
+            $this->db->select('NOPRODUIT, LIBELLE, PRIXHT, TAUXTVA, NOMIMAGE, NOMIMAGEBIS');
+            $requete = $this->db->get_where('produit', array('NOMARQUE' => $pMarqueChoisie));
+
+            return $requete->row_array();
+        }
+
+        public function retournerArticlesParDates($pDate)
+        {
+            $this->db->select('NOPRODUIT, LIBELLE, PRIXHT, TAUXTVA, NOMIMAGE, NOMIMAGEBIS');
+            $requete = $this->db->get_where('produit', array('DA' => $pMarqueChoisie));
+
+            return $requete->row_array();
         }
     }
 ?>

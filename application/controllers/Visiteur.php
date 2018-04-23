@@ -13,16 +13,20 @@
 
         public function AfficherCatalogue()
         {
+            $Catalogue['Catalogue'] = 'oui';
+
             $DonneesEnvoyees['lesProduits'] = $this->ModeleArticle->retournerProduit();
             $DonneesEnvoyees['TitreDePage'] = 'De fil en aiguille trouvez votre petit bonheur par ici';
 
-            $this->load->view('templates/Entete');            
+            $this->load->view('templates/Entete', $Catalogue);
             $this->load->view('Visiteur/Catalogue', $DonneesEnvoyees);
             $this->load->view('templates/PiedDePage');            
         }
 
         public function voirUnProduit($pNoProduit = NULL)
         {
+            $Catalogue['Catalogue'] = 'non';
+
             $DonneesEnvoyees['unProduit'] = $this->ModeleArticle->retournerProduit($pNoProduit);
 
             if (empty($DonneesEnvoyees['unProduit']))
@@ -33,13 +37,15 @@
             $DonneesEnvoyees['TitreDePage'] = $DonneesEnvoyees['unProduit']['LIBELLE'];
             //récupère le nom du produit et l'ajoute comme titre
 
-            $this->load->view('templates/Entete');            
+            $this->load->view('templates/Entete', $Catalogue);
             $this->load->view('Visiteur/VoirUnProduit', $DonneesEnvoyees);
             $this->load->view('templates/PiedDePage');            
         }
 
         public function seConnecter()
         {
+            $Catalogue['Catalogue'] = 'non';
+
             $this->load->helper('form');
             $this->load->library('form_validation');
 
@@ -50,7 +56,7 @@
 
             if (!($this->input->post('submit')))
             {
-                $this->load->view('templates/Entete');
+                $this->load->view('templates/Entete', $Catalogue);
                 $this->load->view('Visiteur/seConnecter', $DonneesInjectees);
                 $this->load->view('templates/PiedDePage');
             }
@@ -77,7 +83,7 @@
                 }
                 else
                 {
-                    $this->load->view('templates/Entete');
+                    $this->load->view('templates/Entete', $Catalogue);
                     $this->load->view('Visiteur/seConnecter', $DonneesInjectees);
                     $this->load->view('templates/PiedDePage');
                 }  
@@ -86,6 +92,8 @@
 
         public function Inscription()
         {
+            $Catalogue['Catalogue'] = 'non';
+
             $this->load->helper('form');
             $this->load->library('form_validation');
             $this->load->library('email');
@@ -104,7 +112,7 @@
 
             if (!($this->input->post('submit')))
             {
-                $this->load->view('templates/Entete');
+                $this->load->view('templates/Entete', $Catalogue);
                 $this->load->view('Visiteur/Inscription', $DonneesInjectees);
                 $this->load->view('templates/PiedDePage');
             }
@@ -140,11 +148,12 @@
                         $this->email->to($Utilisateur['EMAIL']); 
                         //$this->email->to('angelique.le-roux@gmx.fr');
                         $this->email->subject('Bienvenu sur notre site');
-                        $message = 'Bonjour '. $this->input->post('txtPrenom').' '.$this->input->post('txtNom').', ';
-                        $message .= ' Nous vous confirmons votre inscription sur notre site "De fil en aiguille". ';
-                        $message .= '       Votre identifiant est : '.$Utilisateur['EMAIL'].'. ';
-                        $message .= '       Votre mot de passe : '.$this->input->post('txtMotDePasse').'. ';
-                        $message .= 'En espérant que vous trouverez votre bonheur chez nous.';
+                        $message = 'Bonjour '. $this->input->post('txtPrenom').' '.$this->input->post('txtNom').', 
+Nous vous confirmons votre inscription sur notre site "De fil en aiguille". 
+        Votre identifiant est : '.$Utilisateur['EMAIL'].'. 
+        Votre mot de passe : '.$this->input->post('txtMotDePasse').'. 
+
+En espérant que vous trouverez votre bonheur chez nous.';
                         $this->email->message($message);	
 
                         if (!$this->email->send())
@@ -157,14 +166,14 @@
                     }
                     else
                     {
-                        $this->load->view('templates/Entete');
+                        $this->load->view('templates/Entete', $Catalogue);
                         $this->load->view('Visiteur/Inscription', $DonneesInjectees);
                         $this->load->view('templates/PiedDePage');
                     }  
                 }
                 else
                 {
-                    $this->load->view('templates/Entete');
+                    $this->load->view('templates/Entete', $Catalogue);
                     $this->load->view('Visiteur/Inscription', $DonneesInjectees);
                     $this->load->view('templates/PiedDePage');
                 }
@@ -173,6 +182,8 @@
 
         public function seDeConnecter() 
         { 
+            $Catalogue['Catalogue'] = 'non';
+
             $this->session->sess_destroy();
             $this->load->helper('url');
             redirect('/Visiteur/AfficherCatalogue');
@@ -180,6 +191,8 @@
 
         public function listerLesArticlesAvecPagination() 
         {
+            $Catalogue['Catalogue'] = 'oui';
+
             $config = array();
             $config["base_url"] = site_url('Visiteur/listerLesArticlesAvecPagination');
             $config["total_rows"] = $this->ModeleArticle->nombreDArticles();
@@ -198,9 +211,18 @@
             $DonneesEnvoyees['TitreDeLaPage'] = 'De fil en aiguille trouvez votre petit bonheur par ici';
             $DonneesEnvoyees['LesProduits'] = $this->ModeleArticle->retournerArticlesLimite($config["per_page"], $noPage);
             $DonneesEnvoyees['liensPagination'] = $this->pagination->create_links();
-            $this->load->view('templates/Entete');
+            $this->load->view('templates/Entete', $Catalogue);
             $this->load->view('Visiteur/CatalogueAvecPagination', $DonneesEnvoyees);
             $this->load->view('templates/PiedDePage');  
+        }
+
+        public function Accueil()
+        {
+            $Catalogue['Catalogue'] = 'non';
+
+            $this->load->view('templates/Entete', $Catalogue);
+            $this->load->view('Visiteur/Accueil');
+            $this->load->view('templates/PiedDePage');
         }
     }
 ?>

@@ -16,6 +16,8 @@
 
         public function ajouterUnProduit()
         {
+            $Catalogue['Catalogue'] = 'non';
+
             $this->load->helper('form');
             $this->load->library('form_validation');
 
@@ -52,7 +54,7 @@
             else 
             {                
                 //formulaire non validé
-                $this->load->view('templates/Entete');
+                $this->load->view('templates/Entete', $Catalogue);
                 $this->load->view('Administrateur/ajouterUnProduit', $DonneesEnvoyees);
                 $this->load->view('templates/PiedDePage');        
             }
